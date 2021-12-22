@@ -48,12 +48,12 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo('App\Role')->withTrashed();
+        return $this->belongsTo('App\Models\Role')->withTrashed();
     }
 
     public function company()
     {
-        return $this->belongsTo('App\Company')->withTrashed();
+        return $this->belongsTo('App\Models\Company')->withTrashed();
     }
 
 }
