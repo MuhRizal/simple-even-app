@@ -1,0 +1,41 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+	RewriteEngine On
+
+	# Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+	# Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+	# Handle Front Controller...
+	RewriteCond %{REQUEST_URI} !(\.css|\.js|\.png|\.jpg|\.jpeg|\.gif|\.ico|\.eot|\.ogg|\.mp3|\.mp4|\.wav|\.svg|\.ttf|\.woff|\.woff2|\.pdf|\.zip|\.doc|\.docx|\.xls|\.xlsx|robots\.txt)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+	# Handle Fonts and images at public folder...
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_URI} !^/public/
+	RewriteRule ^(css|js|img|images|fonts|extra|docs|upload)/(.*)$ public/$1/$2 [L,NC]
+
+	# STRONG HTACCESS PROTECTION
+	<Files ~ "^.*\.([Ee][Nn][Vv])">
+	 order allow,deny
+	 deny from all
+	 satisfy all
+	</Files>
+</IfModule>
+<ifModule mod_headers.c>
+	Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure
+	Header set X-Content-Type-Options nosniff
+	Header always append X-Frame-Options SAMEORIGIN
+	Header set X-XSS-Protection "1; mode=block"
+</ifModule>
