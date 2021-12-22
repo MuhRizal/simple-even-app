@@ -21,6 +21,8 @@ class CreateEventsTable extends Migration
             $table->date('proposed_date1');
             $table->date('proposed_date2');
             $table->date('proposed_date3');
+            $table->string('proposed_postal_code');
+            $table->text('proposed_street_name');
             $table->tinyInteger('confirmed_date_index');
             $table->integer('confirmed_by')->unsigned();
 			$table->foreign('confirmed_by')->references('id')->on('users');
