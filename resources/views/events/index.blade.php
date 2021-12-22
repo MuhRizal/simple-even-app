@@ -499,12 +499,6 @@ Events
 						if(response['proposed_date3']!=null){
 							$("#confirmed_date_index").append('<option value="3">'+response['proposed_date3']+'</option>');
 						}
-						@if(Auth::user()->role_id==2)
-							if(response['status']!="pending"){
-								$('.approve-event').hide();
-								$('.reject-event').hide();
-							}
-						@endif
 					}
 				});
 			});
