@@ -16,6 +16,7 @@ use App\Http\Controllers\EventController;
 
 Route::group(['middleware' => ['web']], function () {
 	Auth::routes();
+    Route::get('/', [EventController::class, 'index']);
 });
 
 
@@ -25,4 +26,10 @@ Route::group(['middleware' => ['auth']], function () {
 		return redirect('/login');
 	})->name("logout");	
    
+	//-- events
+	Route::get('/events', [EventController::class, 'index']);
+	Route::get('/event/{id}', [EventController::class, 'show']);
+	Route::post('/event', [EventController::class, 'store']);
+	Route::put('/event_confirmation', [EventController::class, 'event_confirmation']);
+	Route::get('/datatable/events', [EventController::class, 'events_table']);
 });
